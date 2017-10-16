@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
@@ -51,6 +50,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnCollisionEnter2D (Collision2D other)
     {
+        print(other.gameObject);
         if (other.gameObject.layer == 8)
         {
             if (ignoring != null)
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour {
                 Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
                 ignoring = null;
             }
-            if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.55f), 0.10f).gameObject.layer == 8)
+            if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.55f), 0.20f).gameObject.layer == 8)
                 jumpsleft = jumps;
         }
     }
