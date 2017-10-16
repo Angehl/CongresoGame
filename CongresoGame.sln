@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongresoGame", "CongresoGame.csproj", "{C61B5ABF-927C-B053-75C0-51C7B36F8695}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongresoGame.Plugins", "CongresoGame.Plugins.csproj", "{F7D031D0-2393-1CD2-8AA7-7F9B1C5A3EDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongresoGame.Editor.Plugins", "CongresoGame.Editor.Plugins.csproj", "{D51CB344-64B0-C710-7F97-BC1800DFDD08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongresoGame.Editor", "CongresoGame.Editor.csproj", "{B57BEFD5-FA87-DC9C-ACEC-417F3AAD9DE8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C61B5ABF-927C-B053-75C0-51C7B36F8695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C61B5ABF-927C-B053-75C0-51C7B36F8695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C61B5ABF-927C-B053-75C0-51C7B36F8695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C61B5ABF-927C-B053-75C0-51C7B36F8695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7D031D0-2393-1CD2-8AA7-7F9B1C5A3EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D031D0-2393-1CD2-8AA7-7F9B1C5A3EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D031D0-2393-1CD2-8AA7-7F9B1C5A3EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D031D0-2393-1CD2-8AA7-7F9B1C5A3EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51CB344-64B0-C710-7F97-BC1800DFDD08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51CB344-64B0-C710-7F97-BC1800DFDD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51CB344-64B0-C710-7F97-BC1800DFDD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51CB344-64B0-C710-7F97-BC1800DFDD08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B57BEFD5-FA87-DC9C-ACEC-417F3AAD9DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B57BEFD5-FA87-DC9C-ACEC-417F3AAD9DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B57BEFD5-FA87-DC9C-ACEC-417F3AAD9DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B57BEFD5-FA87-DC9C-ACEC-417F3AAD9DE8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
