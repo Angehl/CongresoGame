@@ -6,7 +6,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public float speed = 1.0f;
     public int jumps = 1;
-    public float jumpForce = 100f;
+    public int jumpForce = 500;
+    public int pushdownForce = 50;
 
     private int jumpsleft = 1;
     private Collider2D ignoring = null;
@@ -22,6 +23,13 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown("Jump") && jumpsleft > 0)
         {
             jumpsleft--;
+
+            if (ignoring != null)
+            {
+                Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+                ignoring = null;
+            }
+
             GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
             GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpForce);
         }
@@ -32,6 +40,7 @@ public class PlayerMovement : MonoBehaviour {
             {
                 ignoring = temp;
                 Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+                GetComponent<Rigidbody2D>().AddForce(Vector2.down * pushdownForce);
             }
         }
 
@@ -49,7 +58,7 @@ public class PlayerMovement : MonoBehaviour {
                 Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
                 ignoring = null;
             }
-            if(GetComponent<Rigidbody2D>().velocity.y < 0.01f && GetComponent<Rigidbody2D>().velocity.y > -0.01f)
+            if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.55f), 0.10f).gameObject.layer == 8)
                 jumpsleft = jumps;
         }
     }

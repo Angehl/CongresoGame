@@ -260,9 +260,9 @@ GameObject:
   - component: {fileID: 673941814}
   - component: {fileID: 673941818}
   - component: {fileID: 673941815}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -300,7 +300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumps: 2
-  jumpForce: 400
+  jumpForce: 500
+  pushdownForce: 50
 --- !u!212 &673941816
 SpriteRenderer:
   m_ObjectHideFlags: 0
