@@ -7,9 +7,11 @@ public class PlayerMovement : MonoBehaviour {
     public float speed = 1.0f;
     public int jumps = 1;
     public int jumpForce = 500;
+    public int dashForce = 500;
     public int pushdownForce = 50;
 
     private int jumpsleft = 1;
+    private bool dash = true;
     private Collider2D ignoring = null;
 
 	// Use this for initialization
@@ -45,6 +47,11 @@ public class PlayerMovement : MonoBehaviour {
 
 
         var move = new Vector3(Input.GetAxis("Horizontal") * speed, 0, 0);
+
+        if(Input.GetButtonDown("Dash") && dash)
+        {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(Input.GetAxis("Horizontal"), 0) * dashForce);
+        }
         transform.position += move * Time.deltaTime;
 	}
 
@@ -59,7 +66,10 @@ public class PlayerMovement : MonoBehaviour {
                 ignoring = null;
             }
             if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.55f), 0.20f).gameObject.layer == 8)
+            {
                 jumpsleft = jumps;
+                dash = true;
+            }
         }
     }
 }
