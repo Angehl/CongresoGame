@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/GameAssets/Scenes/AnimationStudio.unity
+- path: Assets/GameAssets/Scenes/Escenario1.unity
   isLoaded: 1
   isActive: 1

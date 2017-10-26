@@ -13,63 +13,107 @@ public class PlayerMovement : MonoBehaviour {
     private int jumpsleft = 1;
     private bool dash = true;
     private Collider2D ignoring = null;
+    private Animator anim;
+    private int ground;
+    private Rigidbody2D body;
+    private bool facingRight = false;
 
 	// Use this for initialization
 	void Start () {
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+        body = GetComponent<Rigidbody2D>();
+        ground = 1 << LayerMask.NameToLayer("Terrain");
+        anim = GetComponent<Animator>();
+    }
 
-        if (Input.GetButtonDown("Jump") && jumpsleft > 0)
+    // Update is called once per frame
+    void Update() {
+
+        if (Input.GetButtonDown("Jump"))
         {
-            jumpsleft--;
-
-            if (ignoring != null)
-            {
-                Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
-                ignoring = null;
-            }
-
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpForce);
+            jump();
         }
         if (Input.GetButtonDown("SlideDown"))
         {
-            Collider2D temp = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.55f), 0.20f);
-            if(temp.gameObject.tag == "Platform")
-            {
-                ignoring = temp;
-                Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-                GetComponent<Rigidbody2D>().AddForce(Vector2.down * pushdownForce);
-            }
+            descendPlatform();
         }
 
 
         var move = new Vector3(Input.GetAxis("Horizontal") * speed, 0, 0);
-
-        if(Input.GetButtonDown("Dash") && dash)
-        {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(Input.GetAxis("Horizontal"), 0) * dashForce);
+        if (move.x > 0.1f && !facingRight) {
+            transform.Rotate(0, 180, 0);
+            facingRight = true;
         }
+        if (move.x < -0.1f && facingRight)
+        {
+            transform.Rotate(0, 180, 0);
+            facingRight = false;
+        }
+
+        anim.SetFloat("lateralMovement", Mathf.Abs( move.x));
+
+        if (Input.GetButtonDown("Dash") && dash)
+        {
+           body.AddForce(new Vector2(Input.GetAxis("Horizontal"), 0) * dashForce);
+        }
+
         transform.position += move * Time.deltaTime;
-	}
+        anim.SetFloat("verticalMovement", body.velocity.y);
+    }
 
     private void OnCollisionEnter2D (Collision2D other)
     {
-        print(other.gameObject);
         if (other.gameObject.layer == 8)
         {
-            if (ignoring != null)
-            {
-                Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
-                ignoring = null;
-            }
-            if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.55f), 0.20f).gameObject.layer == 8)
-            {
-                jumpsleft = jumps;
-                dash = true;
-            }
+            hitGround(other);
         }
     }
+
+    private void descendPlatform()
+    {
+        Collider2D temp = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 2f), 0.5f, ground);
+        print(temp);
+        if (temp != null && temp.gameObject.tag == "Platform")
+        {
+            anim.SetBool("onGround", false);
+            ignoring = temp;
+            Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            body.AddForce(Vector2.down * pushdownForce);
+            anim.SetFloat("verticalMovement", body.velocity.y);
+        }
+    }
+
+    private void jump() {
+        if (jumpsleft <= 0)
+            return;
+
+        anim.SetBool("onGround", false);
+        jumpsleft--;
+
+        if (ignoring != null)
+        {
+            Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+            ignoring = null;
+        }
+
+        body.velocity = new Vector2(0, 0);
+        body.AddForce(Vector2.up * jumpForce);
+        anim.SetFloat("verticalMovement", body.velocity.y);
+    }
+
+    private void hitGround(Collision2D other) {
+        if (ignoring != null)
+        {
+            Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+            ignoring = null;
+        }
+        Collider2D temp = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 2f), 0.5f, ground);
+        if (temp != null)
+        {
+            anim.SetBool("onGround", true);
+            jumpsleft = jumps;
+            dash = true;
+            anim.SetFloat("verticalMovement", body.velocity.y);
+        }
+    }
+
 }
