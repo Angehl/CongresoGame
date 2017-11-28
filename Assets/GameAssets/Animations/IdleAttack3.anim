@@ -3166,6 +3166,34 @@ AnimationClip:
   m_GenerateMotionCurves: 0
   m_Events:
   - time: 0
+    functionName: locks
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 2
+    messageOptions: 0
+  - time: 0.5
+    functionName: unlocks
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5
+    functionName: attack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 2
+    messageOptions: 0
+  - time: 1.75
+    functionName: locks
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.75
     functionName: attack
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -3173,7 +3201,7 @@ AnimationClip:
     intParameter: 2
     messageOptions: 0
   - time: 2
-    functionName: attack
+    functionName: unlocks
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

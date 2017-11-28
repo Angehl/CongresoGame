@@ -228,6 +228,8 @@
     <Compile Include="Assets\2DTilezoneFiles\Scripts\AutoColliderGenerator.cs" />
     <Compile Include="Assets\2DTilezoneFiles\Scripts\PixelPerfectCamera.cs" />
     <Compile Include="Assets\2DTilezoneFiles\Scripts\TileInfo.cs" />
+    <Compile Include="Assets\GameAssets\Scripts\LevelController.cs" />
+    <Compile Include="Assets\GameAssets\Scripts\LeverLoader.cs" />
     <Compile Include="Assets\GameAssets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Pixel Character Builder\Scripts\PixelCharacter.cs" />
     <Compile Include="Assets\Pixel Character Builder\Scripts\PixelCharacterDrawTool.cs" />
@@ -240,6 +242,7 @@
     <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
+    <Compile Include="Assets\soundControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\2DTilezoneFiles\CollisionData\dirt-tiles_collision_data.cd" />
