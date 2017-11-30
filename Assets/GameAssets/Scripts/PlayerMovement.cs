@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D body;   //Componente Rigidbody2d del player
     public bool facingRight = false;   //Si esta hacia la izquierda o la derecha
 
-    public int combo = 0;
+    private int combo = 0;
     public int points = 0;
 
     // Use this for initialization
@@ -68,6 +68,11 @@ public class PlayerMovement : MonoBehaviour {
             jump();
         }
 
+        if (midair)
+        {
+            body.velocity = Vector2.zero;
+        }
+
         if (onGround())
         {
             anim.SetBool("onGround", true);
@@ -80,13 +85,13 @@ public class PlayerMovement : MonoBehaviour {
         //Se mueve en función del valor del eje lateral de movimiento. Luego se gira hacia la izquierda o la derecha y actualiza la condición del animador
         if (!locked)
         {
-            var move = new Vector3(Input.GetAxis(horizontalAxis) * speed, 0, 0);
+            var move = new Vector3(Input.GetAxis(horizontalAxis) * speed, body.velocity.y, 0);
             walk(move);
         }
 
         if (dashing)
         {
-            var move = new Vector3(dashSpeed, 0, 0);
+            var move = new Vector3(dashSpeed, body.velocity.y, 0);
             walk(move);
         }
 
@@ -99,11 +104,6 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown(attackButton))
         {
             anim.SetTrigger("Attack");
-        }
-
-        if (midair)
-        {
-            body.velocity = Vector2.zero;
         }
 
         //Se mueve y comprueba el moviento vertical
@@ -163,7 +163,6 @@ public class PlayerMovement : MonoBehaviour {
         Collider2D temp = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1.6f), 0.5f, ground);
         if (temp != null && temp.gameObject.tag == "Platform")
         {
-            print(temp);
             anim.SetBool("onGround", false);
             ignoring = temp;
             Physics2D.IgnoreCollision(ignoring.GetComponent<Collider2D>(), GetComponent<Collider2D>());
@@ -220,11 +219,14 @@ public class PlayerMovement : MonoBehaviour {
 
     private void dashMovement()
     {
-        if ((dashSpeed < 0 && facingRight) || (dashSpeed > 0 && !facingRight))
+       if ((dashSpeed < 0 && facingRight) || (dashSpeed > 0 && !facingRight))
             dashSpeed *= -1;
 
         dashing = !dashing;
         inmune = !inmune;
+
+        if (dashing == false)
+            body.velocity = Vector2.zero;
     }
 
     private void endDash()
@@ -232,6 +234,8 @@ public class PlayerMovement : MonoBehaviour {
         locked = false;
         midair = false;
         dash = false;
+        dashing = false;
+        inmune = false;
     }
 
     private void walk(Vector3 movement)
@@ -250,27 +254,25 @@ public class PlayerMovement : MonoBehaviour {
             attacking = true;
         else if (attacking == true)
             attacking = false;
-
-        Vector3 temp = transform.position + movement * Time.deltaTime;
-        float xdist = 0.21f;
-        float yhead = 0.4f;
-        float yfoot = -1.1f;
-        Collider2D head;
-        Collider2D body;
-        Collider2D foot;
-        if (facingRight) {
-            head = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x + xdist, gameObject.transform.position.y + yhead), 0.1f, ground);
-            body = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x + xdist, gameObject.transform.position.y), 0.1f, ground);
-            foot = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x + xdist, gameObject.transform.position.y + yfoot), 0.1f, ground);
-        }
-        else
-        {
-            head = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x - xdist, gameObject.transform.position.y + yhead), 0.1f, ground);
-            body = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x - xdist, gameObject.transform.position.y), 0.1f, ground);
-            foot = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x - xdist, gameObject.transform.position.y + yfoot), 0.1f, ground);
-        }
-        if ((foot == null || foot.tag != "Ground") && (head == null || head.tag != "Ground") && (body == null || body.tag != "Ground"))
-            transform.position += movement * Time.deltaTime;
+        /* float xdist = 0.21f;
+         float yhead = 0.4f;
+         float yfoot = -1.1f;
+         Collider2D head;
+         Collider2D body;
+         Collider2D foot;
+         if (facingRight) {
+             head = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x + xdist, gameObject.transform.position.y + yhead), 0.1f, ground);
+             body = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x + xdist, gameObject.transform.position.y), 0.1f, ground);
+             foot = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x + xdist, gameObject.transform.position.y + yfoot), 0.1f, ground);
+         }
+         else
+         {
+             head = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x - xdist, gameObject.transform.position.y + yhead), 0.1f, ground);
+             body = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x - xdist, gameObject.transform.position.y), 0.1f, ground);
+             foot = Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x - xdist, gameObject.transform.position.y + yfoot), 0.1f, ground);
+         }
+         if ((foot == null || foot.tag != "Ground") && (head == null || head.tag != "Ground") && (body == null || body.tag != "Ground"))*/
+        body.velocity = movement;
         anim.SetFloat("lateralMovement", Mathf.Abs(movement.x));
     }
 
@@ -282,6 +284,7 @@ public class PlayerMovement : MonoBehaviour {
 
         dashing = false;
         attacking = false;
+        midair = false;
         int i = UnityEngine.Random.Range(0,2);
         hits[i].Play();
 

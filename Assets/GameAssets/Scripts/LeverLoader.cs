@@ -6,21 +6,18 @@ using UnityEngine.SceneManagement;
 public class LeverLoader : MonoBehaviour {
 
     public float time = 0;
-    public GameObject canvas;
     
     public void LoadByIndex(int index)
     {
         LevelController.time = this.time;
-        AudioSource audio = canvas.GetComponent<AudioSource>();
-        audio.Play();
         SceneManager.LoadScene(index);
+        GetComponent<AudioSource>().Play();
     }
 
     public void Exit()
     {
+        GetComponent<AudioSource>().Play();
         Application.Quit();
-        AudioSource audio = canvas.GetComponent<AudioSource>();
-        audio.Play();
     }
 
 }

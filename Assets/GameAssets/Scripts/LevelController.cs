@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ public class LevelController : MonoBehaviour {
     private bool ended = false;
     public AudioSource whistle;
     public AudioSource bip;
+    public AudioSource music;
 
     void Start () {
         on = false;
@@ -32,6 +34,7 @@ public class LevelController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         if (on)
         {
             updateTexts();
@@ -49,8 +52,10 @@ public class LevelController : MonoBehaviour {
                     Anouncements.text = "Get\nReady";
                 else if (timer >= 3.0f)
                 {
-                    if (Anouncements.text != "3")
+                    if (Anouncements.text != "3") {
                         bip.Play();
+                        music.Play();
+                    }
                     Anouncements.text = "3";
                 }
                 else if (timer >= 2.0f)
@@ -107,6 +112,8 @@ public class LevelController : MonoBehaviour {
 
     private void gameOver()
     {
+        music.Stop();
+        whistle.volume = 1;
         whistle.Play();
         timer = 5;
         ended = true;

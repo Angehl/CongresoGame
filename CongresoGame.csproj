@@ -228,6 +228,7 @@
     <Compile Include="Assets\2DTilezoneFiles\Scripts\AutoColliderGenerator.cs" />
     <Compile Include="Assets\2DTilezoneFiles\Scripts\PixelPerfectCamera.cs" />
     <Compile Include="Assets\2DTilezoneFiles\Scripts\TileInfo.cs" />
+    <Compile Include="Assets\cameraControl.cs" />
     <Compile Include="Assets\GameAssets\Scripts\LevelController.cs" />
     <Compile Include="Assets\GameAssets\Scripts\LeverLoader.cs" />
     <Compile Include="Assets\GameAssets\Scripts\PlayerMovement.cs" />
